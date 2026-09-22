@@ -15,11 +15,11 @@ A dense 11-page Harvard Business Review article goes in; grounded, page-cited an
 
 ## Primary Project Artifact
 
-### [Executed Notebook (HTML)](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.html)
+### [Notebook (.ipynb)](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.ipynb)
 
-The graded submission artifact -- a fully executed run with real model outputs, source-cited answers, and both visualizations, viewable in any browser with no setup.
+The source notebook -- code, prompts, and analysis, with real model outputs already saved in the cell outputs.
 
-Also included: the source [.ipynb](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.ipynb), and the author's own [reflection document](./reflections.pdf) (not a course requirement).
+Also included: an [executed HTML export](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.html) (the graded submission artifact, viewable in any browser with no setup), and the author's own [reflection document](./reflections.pdf) (not a course requirement).
 
 ---
 

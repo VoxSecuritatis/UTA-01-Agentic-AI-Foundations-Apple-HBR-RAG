@@ -13,13 +13,17 @@ A dense 11-page Harvard Business Review article goes in; grounded, page-cited an
 
 ---
 
-## Primary Project Artifact
+## Primary Project Artifacts
 
 ### [Notebook (.ipynb)](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.ipynb)
 
 The source notebook -- code, prompts, and analysis, with real model outputs already saved in the cell outputs.
 
-Also included: an [executed HTML export](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.html) (the graded submission artifact, viewable in any browser with no setup), and the author's own [reflection document](./reflections.pdf) (not a course requirement).
+### [Reflection Document (.pdf)](./reflections.pdf)
+
+The author's own retrospective -- project overview, architecture, design decisions, challenges and resolutions, trade-offs, and personal reflections, following the same structure as this README.
+
+Also included: an [executed HTML export](./Brock_Frary-PGP-AIABA-UTA-Sept26-Apple_HBR_RAG_Project_1.html) of the notebook (the graded submission artifact, viewable in any browser with no setup).
 
 ---
 

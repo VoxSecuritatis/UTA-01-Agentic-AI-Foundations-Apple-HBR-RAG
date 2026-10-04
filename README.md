@@ -1,6 +1,6 @@
 # Apple HBR RAG -- Retrieval-Augmented Generation for Business Document Q&A
 
-##### UTA-PGP-AIABA: Agentic AI Foundations, Project 1 | Brock Frary | Published: 2026-09-21 | Updated: 2026-09-21
+##### UTA-PGP-AIABA: Agentic AI Foundations, Project 1 | Brock Frary | Published: 2026-09-21 | Updated: 2026-10-04
 
 A dense 11-page Harvard Business Review article goes in; grounded, page-cited answers to three business questions come out -- produced three different ways (a bare LLM, a prompt-engineered LLM, and RAG) so the value of retrieval is visible through direct, run-and-compare evidence rather than asserted.
 
@@ -29,7 +29,7 @@ Also included: an [executed HTML export](./Brock_Frary-PGP-AIABA-UTA-Sept26-Appl
 
 *University of Texas at Austin -- Post Graduate Program in AI Agents for Business Applications (UTA-PGP-AIABA), September 2026 Cohort -- Module 1 Capstone*
 
-> **Status:** Complete. Executed end to end in Google Colab with zero errors and zero warnings; all three question-answering approaches (bare LLM, prompt engineering, RAG) verified against real live-model outputs, not simulated. RAG correctly identifies the article's authors, publisher, and issue date (a fact neither of the other two approaches can produce), lists all three of the article's actual leadership characteristics, and cites two specific examples tied back to the leadership model -- every answer accompanied by the source page numbers it was drawn from.
+> **Status:** Complete and resubmitted 2026-10-04. Executed end to end in Google Colab on a T4 with zero errors; all three question-answering approaches (bare LLM, prompt engineering, RAG) verified against real live-model outputs, not simulated. One informational `[WARN] ... retrying` line appears in the output when the course API gateway briefly rejects a request; the notebook explains it and the automatic retry succeeds. RAG correctly identifies the article's authors, publisher, and issue date (a fact neither of the other two approaches can produce), lists all three of the article's actual leadership characteristics, and cites four specific examples tied back to the leadership model -- every answer accompanied by the source page numbers it was drawn from.
 
 ## Overview
 
@@ -67,8 +67,8 @@ Source PDF
 |---|---:|---|
 | `chunk_size` | 512 tokens | Short corpus (~5,300 words after cleanup); smaller chunks improve retrieval granularity |
 | `chunk_overlap` | 100 tokens | ~20%, avoids splitting a leadership characteristic or example across a chunk boundary |
-| `k` | 8 | Multi-fact questions need evidence from several pages; k=4 was tried first and proved too low for one question -- see Challenges below |
-| `temperature` | 0 | Factual extraction; deterministic and reproducible |
+| `k` | 8 | Multi-fact questions need evidence from several pages; k=4 was tried first and proved too low for one question -- see Challenges below. A later grid over k of 3, 5, 8, and 12 showed k=5 also passes; k=8 is kept for margin |
+| `temperature` | 0 | Factual extraction; the most repeatable setting (answers still vary slightly between runs) |
 
 **Figure A -- RAG Pipeline Architecture**
 
@@ -85,6 +85,17 @@ The same three questions run through all three approaches side by side. The mode
 ### A challenge worth naming: retrieval failure vs. synthesis failure
 
 The RAG pipeline initially failed the question about specific innovation examples even after raising `k`. From the outside, a retrieval miss (the right chunk never fetched) and a synthesis failure (the right chunk fetched but the model not using it) look identical -- both come back as "the answer isn't there." Diagnosing this required inspecting the actual retrieved chunks directly: the right chunk was present in context, but the model still declined to connect it to the question. The fix combined `k=8` with a revised prompt that explicitly asks the model to bridge wording differences between the question and the source text -- raising `k` alone was necessary but not sufficient.
+
+## Resubmission update (2026-10-04)
+
+After the first submission, an audit against the full course rubric and support-session deck found gaps, and the notebook was extended and re-run end to end. What was added, and what it showed:
+
+- **Prompt engineering, extended.** Rule-based and few-shot prompt variants, plus a comparison of `temperature`, `top_p`, and `max_tokens`. The rules changed how the model fails (it states it cannot confirm, then labels any general knowledge), not whether it can answer. Temperature controlled how varied the wording was, not how long the answer was.
+- **RAG parameter experiments.** A grid of three chunk settings and four values of `k`, plus a temperature and `top_p` test on the chosen configuration. Questions 1 and 2 were answered completely under every setting; Question 3, whose evidence is spread across the article, failed at `k=3` and held from `k=5` upward at the chosen chunk size.
+- **Rationale for the embedding model and the vector database**, and a **Next Steps** section.
+- **Optional output evaluation.** Every approach scored side by side: correctness 0.00 for the bare LLM, about 0.11 for the prompt-engineered variants, and 1.00 for RAG, with a separate check of whether each answer is supported by the article.
+
+The reflection document (`reflections.pdf`) records the audit, what changed, and the lessons, including two audit findings that were withdrawn after reading the full deck.
 
 ## Repository structure
 
@@ -108,6 +119,7 @@ To re-run the notebook yourself (rather than just reading the executed `.html`):
 - Google Colab with a T4 GPU runtime (the API-based approach does not require GPU compute, but the runtime is kept aligned with the target deployment environment)
 - An OpenAI-compatible API key (chat + embedding models)
 - Your own copy of the source PDF -- see below
+- To run the notebook a second time in the same session, restart the session first; the vector store is rebuilt on every run and a store left open by the previous run cannot be replaced
 
 ```
 langchain==0.3.20
@@ -129,6 +141,10 @@ matplotlib==3.11.2
 - [x] Three-way question-answering comparison (bare LLM, prompt-engineered LLM, RAG), verified against real live-model outputs
 - [x] RAG source attribution (page numbers) on every grounded answer
 - [x] Two architecture diagrams (pipeline, three-way comparison)
+- [x] Prompt-engineering variants and generation-parameter comparison
+- [x] RAG chunking, retriever, and generation-parameter experiments
+- [x] Embedding-model and vector-database rationale, and Next Steps
+- [x] Optional side-by-side output evaluation
 - [x] Reflection document (`.pdf`) -- author's own artifact, not a course requirement
 
 ## A note on the source material

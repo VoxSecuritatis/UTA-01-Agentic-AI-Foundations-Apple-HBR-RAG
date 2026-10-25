@@ -1,3 +1,5 @@
+[← Back to the UTA-AIABA Sept 2026 portfolio](https://github.com/VoxSecuritatis/UTA-AIABA-Sept26-AI-Agents-for-Business-Applications)
+
 # Apple HBR RAG -- Retrieval-Augmented Generation for Business Document Q&A
 
 ##### UTA-PGP-AIABA: Agentic AI Foundations, Project 1 | Brock Frary | Published: 2026-09-21 | Updated: 2026-10-04
